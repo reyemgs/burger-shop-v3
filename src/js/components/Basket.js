@@ -1,3 +1,7 @@
+import EVENTS from './constants/constants.js';
+
+const { ADD_IN_BASKET, CHANGE_QUANTITY } = EVENTS;
+
 export default class Basket {
     constructor(emitter) {
         this.basketWrapper = document.querySelector('.basket');
@@ -8,12 +12,12 @@ export default class Basket {
 
         this.eventEmitter = emitter;
 
-        this.eventEmitter.on('addInBasket', product => {
+        this.eventEmitter.on(ADD_IN_BASKET, product => {
             this.addProduct(product);
             this.updateTotalPrice();
         });
 
-        this.eventEmitter.on('changeQuantity', () => {
+        this.eventEmitter.on(CHANGE_QUANTITY, () => {
             this.renderAddedProducts();
             this.updateTotalPrice();
         });
@@ -27,8 +31,14 @@ export default class Basket {
         });
     }
 
+    updateQuantity(product) {
+        this.renderAddedProducts(product);
+        this.updateTotalPrice();
+    }
+
     addProduct(product) {
         const currentProduct = product;
+
         const addedProduct = this.addedProducts.find(item => item === product);
         if (!addedProduct) {
             this.addedProducts.push(product);

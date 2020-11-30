@@ -1,3 +1,7 @@
+import EVENTS from './constants/constants.js';
+
+const { ADD_IN_BASKET, CHANGE_QUANTITY } = EVENTS;
+
 export default class ProductCard {
     constructor(props, emitter) {
         this.id = props.id;
@@ -30,17 +34,17 @@ export default class ProductCard {
     increaseQuantity() {
         if (this.quantity === 99) return;
         this.quantity += 1;
-        this.eventEmitter.emit('changeQuantity');
+        this.eventEmitter.emit(CHANGE_QUANTITY);
     }
 
     decreaseQuantity() {
         if (this.quantity === 1) return;
         this.quantity -= 1;
-        this.eventEmitter.emit('changeQuantity');
+        this.eventEmitter.emit(CHANGE_QUANTITY);
     }
 
     addInBasket() {
-        this.eventEmitter.emit('addInBasket', this);
+        this.eventEmitter.emit(ADD_IN_BASKET, this);
     }
 
     addIngridient(ingridient) {
