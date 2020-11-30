@@ -2,7 +2,7 @@ import Fetch from './api/Fetch.js';
 import ProductCard from './components/ProductCard.js';
 import MenuList from './components/MenuList.js';
 import Basket from './components/Basket.js';
-import EventHandler from './components/EventHandler.js';
+import EventHandler from './components/EventEmitter.js';
 import Modal from './components/Modal.js';
 import IngridientCard from './components/IngridientCard.js';
 
