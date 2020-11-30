@@ -1,5 +1,5 @@
 export default class IngridientCard {
-    constructor(props, handler) {
+    constructor(props, emitter) {
         this.id = props.id;
         this.name = props.name;
         this.price = props.price;
@@ -10,10 +10,10 @@ export default class IngridientCard {
         this.type = props.type;
         this.currentWrapper = null;
 
-        this.eventHandler = handler;
+        this.eventEmitter = emitter;
 
         if (this.type === 'single') {
-            this.eventHandler.emit('setDefaultIngridients', this);
+            this.eventEmitter.emit('setDefaultIngridients', this);
         }
     }
 
@@ -30,9 +30,9 @@ export default class IngridientCard {
         wrapper.className = 'ingridient-wrapper';
         wrapper.setAttribute('data-ingridient-id', this.id);
         wrapper.addEventListener('click', () => {
-            this.eventHandler.emit('addIngridient', this);
-            this.eventHandler.emit('updateModalPrice');
-            this.eventHandler.emit('updateBasketTotalPrice');
+            this.eventEmitter.emit('addIngridient', this);
+            this.eventEmitter.emit('updateModalPrice');
+            this.eventEmitter.emit('updateBasketTotalPrice');
         });
         this.currentWrapper = wrapper;
 

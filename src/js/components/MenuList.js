@@ -1,7 +1,7 @@
 export default class MenuList {
-    constructor(props, handler) {
+    constructor(props, emitter) {
         this.items = props;
-        this.eventHandler = handler;
+        this.eventEmitter = emitter;
     }
 
     active(category) {
@@ -17,7 +17,7 @@ export default class MenuList {
     onPage(category) {
         const rightSideWrapper = document.querySelector('#rightside-wrapper');
         rightSideWrapper.innerHTML = '';
-        this.eventHandler.emit('renderProductsByCategory', category);
+        this.eventEmitter.emit('renderProductsByCategory', category);
         this.active(category);
     }
 

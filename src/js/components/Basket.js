@@ -1,28 +1,28 @@
 export default class Basket {
-    constructor(handler) {
+    constructor(emitter) {
         this.basketWrapper = document.querySelector('.basket');
         this.addedProducts = [];
         this.totalPrice = 0;
 
         this.productWrapper = null;
 
-        this.eventHandler = handler;
+        this.eventEmitter = emitter;
 
-        this.eventHandler.on('addInBasket', product => {
+        this.eventEmitter.on('addInBasket', product => {
             this.addProduct(product);
             this.updateTotalPrice();
         });
 
-        this.eventHandler.on('changeQuantity', () => {
+        this.eventEmitter.on('changeQuantity', () => {
             this.renderAddedProducts();
             this.updateTotalPrice();
         });
 
-        this.eventHandler.on('updateBasketTotalPrice', () => {
+        this.eventEmitter.on('updateBasketTotalPrice', () => {
             this.updateTotalPrice();
         });
 
-        this.eventHandler.on('updateIngridients', () => {
+        this.eventEmitter.on('updateIngridients', () => {
             this.renderAddedProducts();
         });
     }

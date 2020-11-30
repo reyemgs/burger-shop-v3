@@ -1,21 +1,21 @@
 export default class Modal {
-    constructor(props, ingridients, handler) {
+    constructor(props, ingridients, emitter) {
         this.navigationItems = props;
         this.ingridients = ingridients;
         this.currentProduct = null;
         this.currentPage = null;
 
-        this.eventHandler = handler;
+        this.eventEmitter = emitter;
 
-        this.eventHandler.on('openModal', product => {
+        this.eventEmitter.on('openModal', product => {
             this.open(product);
         });
 
-        this.eventHandler.on('addIngridient', ingridient => {
+        this.eventEmitter.on('addIngridient', ingridient => {
             this.addIngridient(ingridient);
         });
 
-        this.eventHandler.on('updateModalPrice', () => {
+        this.eventEmitter.on('updateModalPrice', () => {
             this.updatePrice();
         });
     }
@@ -32,7 +32,7 @@ export default class Modal {
         document.body.style.overflow = 'hidden';
         content.innerHTML = '';
 
-        this.eventHandler.emit('renderIngridientsByCategory', menuItem.category);
+        this.eventEmitter.emit('renderIngridientsByCategory', menuItem.category);
         this.activateIngridients(menuItem.category);
         this.createPrice();
     }
@@ -70,7 +70,7 @@ export default class Modal {
         this.activePage(menuItem);
         content.innerHTML = '';
 
-        this.eventHandler.emit('renderIngridientsByCategory', menuItem.category);
+        this.eventEmitter.emit('renderIngridientsByCategory', menuItem.category);
         this.activateIngridients(menuItem.category);
     }
 
@@ -89,7 +89,7 @@ export default class Modal {
         this.activePage(menuItem);
         content.innerHTML = '';
 
-        this.eventHandler.emit('renderIngridientsByCategory', menuItem.category);
+        this.eventEmitter.emit('renderIngridientsByCategory', menuItem.category);
         this.activateIngridients(menuItem.category);
     }
 
@@ -173,7 +173,7 @@ export default class Modal {
         product.addIngridient(ingridient);
         this.calculatePrice();
         ingridient.addActiveClass();
-        this.eventHandler.emit('updateIngridients');
+        this.eventEmitter.emit('updateIngridients');
     }
 
     addMultiple(ingridient) {
@@ -188,7 +188,7 @@ export default class Modal {
             product.addIngridient(ingridient);
             this.calculatePrice();
             ingridient.addActiveClass();
-            this.eventHandler.emit('updateIngridients');
+            this.eventEmitter.emit('updateIngridients');
             return;
         }
 
@@ -196,7 +196,7 @@ export default class Modal {
         product.removeIngridient(ingridient);
         this.calculatePrice();
         ingridient.removeActiveClass();
-        this.eventHandler.emit('updateIngridients');
+        this.eventEmitter.emit('updateIngridients');
     }
 
     removeIngridient(ingridient) {
@@ -242,19 +242,19 @@ export default class Modal {
         if (this.currentProduct.quantity === 99) return;
         this.currentProduct.quantity += 1;
         this.currentProduct.updateQuantity();
-        this.eventHandler.emit('changeQuantity');
+        this.eventEmitter.emit('changeQuantity');
     }
 
     decreaseQuantity() {
         if (this.currentProduct.quantity === 1) return;
         this.currentProduct.quantity -= 1;
         this.currentProduct.updateQuantity();
-        this.eventHandler.emit('changeQuantity');
+        this.eventEmitter.emit('changeQuantity');
     }
 
     addInBasket() {
         if (this.currentProduct.inBasket) return;
-        this.eventHandler.emit('addInBasket', this.currentProduct);
+        this.eventEmitter.emit('addInBasket', this.currentProduct);
     }
 
     changeButton() {

@@ -1,5 +1,5 @@
 export default class ProductCard {
-    constructor(props, handler) {
+    constructor(props, emitter) {
         this.id = props.id;
         this.name = props.name;
         this.image = props.image;
@@ -20,9 +20,9 @@ export default class ProductCard {
 
         this.addedIngridients = [];
 
-        this.eventHandler = handler;
+        this.eventEmitter = emitter;
 
-        this.eventHandler.on('setDefaultIngridients', ingridient =>
+        this.eventEmitter.on('setDefaultIngridients', ingridient =>
             this.setDefaultIngridients(ingridient)
         );
     }
@@ -30,17 +30,17 @@ export default class ProductCard {
     increaseQuantity() {
         if (this.quantity === 99) return;
         this.quantity += 1;
-        this.eventHandler.emit('changeQuantity');
+        this.eventEmitter.emit('changeQuantity');
     }
 
     decreaseQuantity() {
         if (this.quantity === 1) return;
         this.quantity -= 1;
-        this.eventHandler.emit('changeQuantity');
+        this.eventEmitter.emit('changeQuantity');
     }
 
     addInBasket() {
-        this.eventHandler.emit('addInBasket', this);
+        this.eventEmitter.emit('addInBasket', this);
     }
 
     addIngridient(ingridient) {
@@ -62,7 +62,7 @@ export default class ProductCard {
     }
 
     resetDefault() {
-        this.eventHandler.emit('resetProduct', this);
+        this.eventEmitter.emit('resetProduct', this);
     }
 
     updateQuantity() {
@@ -152,7 +152,7 @@ export default class ProductCard {
         });
         inBasketButton.addEventListener('click', () => {
             if (this.type === 'multiple') {
-                this.eventHandler.emit('openModal', this);
+                this.eventEmitter.emit('openModal', this);
                 return;
             }
             if (this.inBasket) return;
