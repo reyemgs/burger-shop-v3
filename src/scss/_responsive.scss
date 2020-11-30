@@ -1,0 +1,197 @@
+@media (min-height: 1000px) {
+    .basket-content-wrapper {
+        max-height: 250px;
+    }
+    .modal-wrapper {
+        &.active {
+            height: 80%;
+        }
+    }
+
+    .modal-content {
+        height: 70%;
+    }
+}
+
+@media (max-height: 1000px) {
+    .basket-content-wrapper {
+        max-height: 250px;
+    }
+    .modal-wrapper {
+        &.active {
+            height: 80%;
+        }
+    }
+
+    .modal-content {
+        height: 70%;
+    }
+}
+
+@media (max-height: 924px) {
+    .basket-content-wrapper {
+        max-height: 220px;
+    }
+    .modal-wrapper {
+        &.active {
+            height: 80%;
+        }
+    }
+
+    .modal-content {
+        height: 70%;
+    }
+}
+
+@media (max-height: 852px) {
+    .basket-content-wrapper {
+        max-height: 200px;
+    }
+
+    .modal-wrapper {
+        &.active {
+            height: 80%;
+        }
+    }
+
+    .modal-content {
+        height: 60%;
+    }
+
+}
+
+@media (max-height: 768px) {
+    .basket-content-wrapper {
+        max-height: 100px;
+    }
+
+    .modal-wrapper {
+        &.active {
+            height: 100%;
+        }
+    }
+
+    .modal-content {
+        height: 60%;
+    }
+}
+
+@media (max-height: 676px) {
+    .modal-content {
+        height: 52%;
+    }
+}
+
+
+
+@media (min-width: 768px) {
+    .modal-title {
+        font-size: 30px;
+        color: $white;
+    }
+
+    .modal-menu-item {
+        font-size: 18px;
+        padding: 10px;
+        &.active {
+            transform: scale(1.1, 1.1);
+        }
+    }
+}
+
+@media (max-width: 924px) {
+    #sidebar-wrapper {
+        width: 40%;
+    }
+}
+
+
+@media (max-width: 767px) {
+    #sidebar-wrapper {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        top: 10px;
+        .menu-list {
+            margin-top: 0px;
+        }
+    }
+
+    #rightside-wrapper {
+        margin: auto;
+        width: 100%;
+        padding-top: 10px;
+        .product-card-wrapper {
+            width: 90%;
+            margin: 20px auto;
+        }
+    }
+
+    header {
+        position: relative;
+
+        span,
+        .fa-bars {
+            line-height: 40px;
+            color: $yellow-text;
+        }
+
+        span {
+            font-size: 30px;
+            font-weight: bold;
+        }
+
+        .fa-bars {
+            visibility: hidden;
+        }
+    }
+
+    .modal-title {
+        font-size: 20px;
+        color: $white;
+    }
+
+    .modal-menu-item {
+        font-size: 13px;
+        padding: 10px;
+        &.active {
+            transform: scale(1.1, 1.1);
+        }
+    }
+}
+
+@media (max-width: 610px) {
+    .modal-wrapper {
+        &.active {
+            width: 100%;
+        }
+    }
+    .modal-title {
+        width: 160px;
+        padding-left: 10px;
+        font-size: 12px;
+        text-align: left;
+        color: $yellow-text;
+    }
+
+    .modal-menu-item {
+        font-size: 12px;
+        padding: 10px;
+        &.active {
+            transform: scale(1.1, 1.1);
+        }
+    }
+}
+
+@media (max-width: 400px) {
+    .modal-menu-item {
+        font-size: 10px;
+        padding: 10px 5px;
+        &.active {
+            transform: scale(1.1, 1.1);
+        }
+    }
+    .modal-title {
+        color: $yellow-text;
+    }
+}

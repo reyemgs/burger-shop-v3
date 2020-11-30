@@ -1,0 +1,27 @@
+@mixin border-top-radius {
+    border-top-right-radius: 8px;
+    border-top-left-radius: 8px;
+}
+
+@mixin border-bottom-radius {
+    border-bottom-right-radius: 8px;
+    border-bottom-left-radius: 8px;
+}
+
+@mixin prev-next-buttons {
+    width: 80px;
+    height: 30px;
+    font-weight: bold;
+    margin: 0px 5px;
+    font-size: 15px;
+    outline: none;
+    border-radius: 10px;
+    border: 2px solid $modal-items;
+    color: $white;
+    background: $modal-items;
+    transition: 0.5s;
+    &:hover {
+        background: $modal-buttons;
+        border: 2px solid $modal-buttons;
+    }
+}
