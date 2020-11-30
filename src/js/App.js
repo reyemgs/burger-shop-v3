@@ -39,10 +39,7 @@ class App {
     }
 
     init() {
-        (async () => {
-            await this.request(this.url);
-            this.initComponents();
-        })();
+        this.request(this.url).then(() => this.initComponents());
     }
 
     initComponents() {
