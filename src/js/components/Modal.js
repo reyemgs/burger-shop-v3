@@ -94,7 +94,8 @@ export default class Modal {
     }
 
     onDonePage(content, menuItem) {
-        content.innerHTML = '';
+        const contentWrapper = content;
+        contentWrapper.innerHTML = '';
         this.renderDonePage();
         this.activePage(menuItem);
     }
