@@ -29,7 +29,6 @@ export default class Basket {
     updateQuantity() {
         this.renderAddedProducts();
         this.updateTotalPrice();
-        console.log('changed');
     }
 
     addProduct(product) {

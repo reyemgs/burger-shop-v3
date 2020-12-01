@@ -55,6 +55,14 @@ export default class ProductCard {
         this.localEventEmitter.emit(CHANGE_QUANTITY);
     }
 
+    onAddInBasket(fn) {
+        this.localEventEmitter.on(ADD_IN_BASKET, () => fn());
+    }
+
+    offAddInBasket() {
+        this.localEventEmitter.off(ADD_IN_BASKET);
+    }
+
     addInBasket() {
         this.globalEventEmitter.emit(ADD_IN_BASKET, this);
     }

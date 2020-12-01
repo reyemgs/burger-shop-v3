@@ -5,6 +5,9 @@ import Basket from './components/Basket.js';
 import EventEmitter from './components/EventEmitter.js';
 import Modal from './components/Modal.js';
 import IngridientCard from './components/IngridientCard.js';
+import EVENTS from './components/constants/constants.js';
+
+const { ADD_PRODUCT } = EVENTS;
 
 class App {
     constructor() {
@@ -19,17 +22,17 @@ class App {
         this.basket = null;
         this.modal = null;
 
-        this.eventEmitter = new EventEmitter();
+        this.globalEventEmitter = new EventEmitter();
 
-        this.eventEmitter.on('renderProductsByCategory', category => {
+        this.globalEventEmitter.on('renderProductsByCategory', category => {
             this.renderProductsByCategory(category);
         });
 
-        this.eventEmitter.on('renderIngridientsByCategory', category => {
+        this.globalEventEmitter.on('renderIngridientsByCategory', category => {
             this.renderIngridientsByCategory(category);
         });
 
-        this.eventEmitter.on('resetProduct', product => this.resetProduct(product));
+        this.globalEventEmitter.on('resetProduct', product => this.resetProduct(product));
     }
 
     async request(url) {
@@ -50,16 +53,16 @@ class App {
     }
 
     initSideBar() {
-        this.menuList = new MenuList(this.response.categories, this.eventEmitter);
+        this.menuList = new MenuList(this.response.categories, this.globalEventEmitter);
         this.menuList.render();
         this.menuList.onPage('pizza');
 
-        this.basket = new Basket(this.eventEmitter);
+        this.basket = new Basket(this.globalEventEmitter);
         this.basket.render();
     }
 
     initModal() {
-        this.modal = new Modal(this.response.modal, this.ingridients, this.eventEmitter);
+        this.modal = new Modal(this.response.modal, this.ingridients, this.globalEventEmitter);
         this.modal.render();
     }
 
@@ -68,7 +71,7 @@ class App {
         for (const product of this.response.menu) {
             product.id = id++;
             product.marketImage = this.response.markets[product.market].image;
-            const productCard = new ProductCard(product, this.eventEmitter);
+            const productCard = new ProductCard(product, this.globalEventEmitter);
             this.productCards.push(productCard);
         }
     }
@@ -83,7 +86,7 @@ class App {
                 ingridient.category = category;
                 ingridient.key = key;
 
-                const ingridientCard = new IngridientCard(ingridient, this.eventEmitter);
+                const ingridientCard = new IngridientCard(ingridient, this.globalEventEmitter);
                 this.ingridientCards.push(ingridientCard);
             }
         }
