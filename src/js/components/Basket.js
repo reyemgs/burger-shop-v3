@@ -1,6 +1,6 @@
 import EVENTS from './constants/constants.js';
 
-const { ADD_IN_BASKET, CHANGE_QUANTITY } = EVENTS;
+const { ADD_IN_BASKET } = EVENTS;
 
 export default class Basket {
     constructor(emitter) {
@@ -17,27 +17,25 @@ export default class Basket {
             this.updateTotalPrice();
         });
 
-        this.globalEventEmitter.on('updateBasketTotalPrice', () => {
-            this.updateTotalPrice();
-        });
+        // this.globalEventEmitter.on('updateBasketTotalPrice', () => {
+        //     this.updateTotalPrice();
+        // });
 
-        this.globalEventEmitter.on('updateIngridients', () => {
-            this.renderAddedProducts();
-        });
+        // this.globalEventEmitter.on('updateIngridients', () => {
+        //     this.renderAddedProducts();
+        // });
     }
 
-    updateQuantity(product) {
-        this.renderAddedProducts(product);
+    updateQuantity() {
+        this.renderAddedProducts();
         this.updateTotalPrice();
+        console.log('changed');
     }
 
     addProduct(product) {
         const currentProduct = product;
 
-        currentProduct.localEventEmitter.on(CHANGE_QUANTITY, () => {
-            this.renderAddedProducts();
-            this.updateTotalPrice();
-        })
+        currentProduct.onChangeQuantity(() => this.updateQuantity());
 
         const addedProduct = this.addedProducts.find(item => item === product);
         if (!addedProduct) {
@@ -63,7 +61,7 @@ export default class Basket {
         currentProduct.changeButton();
         currentProduct.updateQuantity();
 
-        currentProduct.localEventEmitter.off(CHANGE_QUANTITY);
+        currentProduct.offChangeQuantity();
 
         if (currentProduct.type === 'multiple') {
             currentProduct.resetDefault();

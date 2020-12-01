@@ -23,10 +23,10 @@
     "no-restricted-syntax": "off",
     "no-plusplus": "off",
     "guard-for-in": "off",
-    "import/extensions": [
-      // "no-param-reassign": "off",
+    "no-param-reassign": "off",
     // "no-process-exit": "off",
     // "object-shorthand": "off",
+    "import/extensions": [
       "error",
       "ignorePackages",
       {

@@ -28,9 +28,19 @@ export default class ProductCard {
         this.globalEventEmitter = emitter;
         this.localEventEmitter = new EventEmitter();
 
-        this.localEventEmitter.on(SET_DEFAULT_INGRIDIENTS, ingridient =>
-            this.setDefaultIngridients(ingridient)
-        );
+        if (this.type === 'multiple') {
+            this.globalEventEmitter.on('setDefaultIngridients', ingridient =>
+                this.setDefaultIngridients(ingridient)
+            );
+        }
+    }
+
+    onChangeQuantity(fn) {
+        this.localEventEmitter.on(CHANGE_QUANTITY, () => fn());
+    }
+
+    offChangeQuantity() {
+        this.localEventEmitter.off(CHANGE_QUANTITY);
     }
 
     increaseQuantity() {
@@ -158,7 +168,7 @@ export default class ProductCard {
         });
         inBasketButton.addEventListener('click', () => {
             if (this.type === 'multiple') {
-                this.localEventEmitter.emit('openModal', this);
+                this.globalEventEmitter.emit('openModal', this);
                 return;
             }
             if (this.inBasket) return;
