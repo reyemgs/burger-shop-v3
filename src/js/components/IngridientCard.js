@@ -1,3 +1,7 @@
+import EVENTS from './constants/constants.js';
+
+const { SET_DEFAULT_INGRIDIENTS } = EVENTS;
+
 export default class IngridientCard {
     constructor(props, emitter) {
         this.id = props.id;
@@ -13,7 +17,7 @@ export default class IngridientCard {
         this.eventEmitter = emitter;
 
         if (this.type === 'single') {
-            this.eventEmitter.emit('setDefaultIngridients', this);
+            this.eventEmitter.emit(SET_DEFAULT_INGRIDIENTS, this);
         }
     }
 

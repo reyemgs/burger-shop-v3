@@ -10,23 +10,18 @@ export default class Basket {
 
         this.productWrapper = null;
 
-        this.eventEmitter = emitter;
+        this.globalEventEmitter = emitter;
 
-        this.eventEmitter.on(ADD_IN_BASKET, product => {
+        this.globalEventEmitter.on(ADD_IN_BASKET, product => {
             this.addProduct(product);
             this.updateTotalPrice();
         });
 
-        this.eventEmitter.on(CHANGE_QUANTITY, () => {
-            this.renderAddedProducts();
+        this.globalEventEmitter.on('updateBasketTotalPrice', () => {
             this.updateTotalPrice();
         });
 
-        this.eventEmitter.on('updateBasketTotalPrice', () => {
-            this.updateTotalPrice();
-        });
-
-        this.eventEmitter.on('updateIngridients', () => {
+        this.globalEventEmitter.on('updateIngridients', () => {
             this.renderAddedProducts();
         });
     }
@@ -38,6 +33,11 @@ export default class Basket {
 
     addProduct(product) {
         const currentProduct = product;
+
+        currentProduct.localEventEmitter.on(CHANGE_QUANTITY, () => {
+            this.renderAddedProducts();
+            this.updateTotalPrice();
+        })
 
         const addedProduct = this.addedProducts.find(item => item === product);
         if (!addedProduct) {
@@ -62,6 +62,9 @@ export default class Basket {
         currentProduct.inBasket = false;
         currentProduct.changeButton();
         currentProduct.updateQuantity();
+
+        currentProduct.localEventEmitter.off(CHANGE_QUANTITY);
+
         if (currentProduct.type === 'multiple') {
             currentProduct.resetDefault();
         }

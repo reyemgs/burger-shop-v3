@@ -1,6 +1,7 @@
 import EVENTS from './constants/constants.js';
+import EventEmitter from './EventEmitter.js';
 
-const { ADD_IN_BASKET, CHANGE_QUANTITY } = EVENTS;
+const { ADD_IN_BASKET, CHANGE_QUANTITY, SET_DEFAULT_INGRIDIENTS } = EVENTS;
 
 export default class ProductCard {
     constructor(props, emitter) {
@@ -24,9 +25,10 @@ export default class ProductCard {
 
         this.addedIngridients = [];
 
-        this.eventEmitter = emitter;
+        this.globalEventEmitter = emitter;
+        this.localEventEmitter = new EventEmitter();
 
-        this.eventEmitter.on('setDefaultIngridients', ingridient =>
+        this.localEventEmitter.on(SET_DEFAULT_INGRIDIENTS, ingridient =>
             this.setDefaultIngridients(ingridient)
         );
     }
@@ -34,17 +36,17 @@ export default class ProductCard {
     increaseQuantity() {
         if (this.quantity === 99) return;
         this.quantity += 1;
-        this.eventEmitter.emit(CHANGE_QUANTITY);
+        this.localEventEmitter.emit(CHANGE_QUANTITY);
     }
 
     decreaseQuantity() {
         if (this.quantity === 1) return;
         this.quantity -= 1;
-        this.eventEmitter.emit(CHANGE_QUANTITY);
+        this.localEventEmitter.emit(CHANGE_QUANTITY);
     }
 
     addInBasket() {
-        this.eventEmitter.emit(ADD_IN_BASKET, this);
+        this.globalEventEmitter.emit(ADD_IN_BASKET, this);
     }
 
     addIngridient(ingridient) {
@@ -66,7 +68,7 @@ export default class ProductCard {
     }
 
     resetDefault() {
-        this.eventEmitter.emit('resetProduct', this);
+        this.localEventEmitter.emit('resetProduct', this);
     }
 
     updateQuantity() {
@@ -156,7 +158,7 @@ export default class ProductCard {
         });
         inBasketButton.addEventListener('click', () => {
             if (this.type === 'multiple') {
-                this.eventEmitter.emit('openModal', this);
+                this.localEventEmitter.emit('openModal', this);
                 return;
             }
             if (this.inBasket) return;
