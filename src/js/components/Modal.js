@@ -262,11 +262,6 @@ export default class Modal {
         this.eventEmitter.emit('changeQuantity');
     }
 
-    addInBasket() {
-        if (this.currentProduct.inBasket) return;
-        this.eventEmitter.emit('addInBasket', this.currentProduct);
-    }
-
     changeButton() {
         const inBasketButton = document.querySelector('.modal-in-basket');
         if (this.currentProduct.inBasket) {
