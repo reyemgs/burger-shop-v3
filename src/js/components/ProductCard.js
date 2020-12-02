@@ -1,7 +1,7 @@
 import EVENTS from './constants/EVENTS.js';
 import EventEmitter from './EventEmitter.js';
 
-const { ADD_IN_BASKET, CHANGE_QUANTITY, SET_DEFAULT_INGRIDIENTS } = EVENTS;
+const { ADD_IN_BASKET, CHANGE_QUANTITY, OPEN_MODAL } = EVENTS;
 
 export default class ProductCard {
     constructor(props, emitter) {
@@ -65,6 +65,18 @@ export default class ProductCard {
 
     addInBasket() {
         this.localEventEmitter.emit(ADD_IN_BASKET, this);
+    }
+
+    onOpenModal(fn) {
+        this.localEventEmitter.on(OPEN_MODAL, fn, this);
+    }
+
+    offOpenModal() {
+        this.localEventEmitter.off(OPEN_MODAL, this);
+    }
+
+    openModal() {
+        this.localEventEmitter.emit(OPEN_MODAL, this);
     }
 
     addIngridient(ingridient) {
@@ -176,7 +188,7 @@ export default class ProductCard {
         });
         inBasketButton.addEventListener('click', () => {
             if (this.type === 'multiple') {
-                this.globalEventEmitter.emit('openModal', this);
+                this.openModal();
                 return;
             }
             if (this.inBasket) return;
