@@ -13,8 +13,7 @@ export default class Basket {
         this.globalEventEmitter = emitter;
 
         this.globalEventEmitter.on(ADD_IN_BASKET, product => {
-            this.addProduct(product);
-            this.updateTotalPrice();
+            this.addProductEvent(product);
         });
 
         // this.globalEventEmitter.on('updateBasketTotalPrice', () => {
@@ -26,8 +25,13 @@ export default class Basket {
         // });
     }
 
-    updateQuantity() {
+    changeQuantityEvent() {
         this.renderAddedProducts();
+        this.updateTotalPrice();
+    }
+
+    addProductEvent(product) {
+        this.addProduct(product);
         this.updateTotalPrice();
     }
 
@@ -35,7 +39,7 @@ export default class Basket {
         const currentProduct = product;
 
         currentProduct.onChangeQuantity(() => {
-            this.updateQuantity();
+            this.changeQuantityEvent();
         });
 
         const addedProduct = this.addedProducts.find(item => item === product);
