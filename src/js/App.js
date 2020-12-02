@@ -47,6 +47,7 @@ class App {
         this.initIngridientCards();
         this.initSideBar();
         this.initModal();
+        this.initProductEvents();
     }
 
     initSideBar() {
@@ -56,7 +57,6 @@ class App {
 
         this.basket = new Basket(this.globalEventEmitter);
         this.basket.render();
-        this.initProductEvents();
     }
 
     initModal() {
@@ -67,6 +67,10 @@ class App {
     initProductEvents() {
         for (const productCard of this.productCards) {
             productCard.onAddInBasket(product => this.basket.addProductEvent(product));
+            if (productCard.type === 'multiple') {
+                productCard.onOpenModal(product => this.modal.open(product));
+                console.log(productCard.localEventEmitter.events);
+            }
         }
     }
 
