@@ -34,7 +34,9 @@ export default class Basket {
     addProduct(product) {
         const currentProduct = product;
 
-        currentProduct.onChangeQuantity(() => this.updateQuantity());
+        currentProduct.onChangeQuantity(() => {
+            this.updateQuantity();
+        });
 
         const addedProduct = this.addedProducts.find(item => item === product);
         if (!addedProduct) {
