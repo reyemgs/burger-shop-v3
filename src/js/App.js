@@ -21,10 +21,6 @@ class App {
 
         this.globalEventEmitter = new EventEmitter();
 
-        this.globalEventEmitter.on('renderIngridientsByCategory', category => {
-            this.renderIngridientsByCategory(category);
-        });
-
         this.globalEventEmitter.on('resetProduct', product => this.resetProduct(product));
     }
 
@@ -49,7 +45,7 @@ class App {
     initSideBar() {
         this.menuList = new MenuList(this.response.categories);
         this.menuList.render();
-        this.menuList.onRenderProductsByCategory(category => {
+        this.menuList.onRenderProducts(category => {
             this.renderProductsByCategory(category);
         });
         this.menuList.onPage('pizza');
@@ -61,6 +57,9 @@ class App {
     initModal() {
         this.modal = new Modal(this.response.modal, this.ingridients, this.globalEventEmitter);
         this.modal.render();
+        this.modal.onRenderIngridients(category => {
+            this.renderIngridientsByCategory(category);
+        });
     }
 
     initProductEvents() {

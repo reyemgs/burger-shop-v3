@@ -1,3 +1,8 @@
+import EVENTS from './constants/EVENTS.js';
+import EventEmitter from './EventEmitter.js';
+
+const { RENDER_INGRIDIENTS_BY_CATEGORY } = EVENTS;
+
 export default class Modal {
     constructor(props, ingridients, emitter) {
         this.navigationItems = props;
@@ -6,6 +11,7 @@ export default class Modal {
         this.currentPage = null;
 
         this.eventEmitter = emitter;
+        this.localEventEmitter = new EventEmitter();
 
         this.eventEmitter.on('addIngridient', ingridient => {
             this.addIngridient(ingridient);
@@ -14,6 +20,14 @@ export default class Modal {
         this.eventEmitter.on('updateModalPrice', () => {
             this.updatePrice();
         });
+    }
+
+    onRenderIngridients(fn) {
+        this.localEventEmitter.on(RENDER_INGRIDIENTS_BY_CATEGORY, fn, this);
+    }
+
+    offRenderIngridients() {
+        this.localEventEmitter.off(RENDER_INGRIDIENTS_BY_CATEGORY, this);
     }
 
     open(product) {
@@ -28,7 +42,7 @@ export default class Modal {
         document.body.style.overflow = 'hidden';
         content.innerHTML = '';
 
-        this.eventEmitter.emit('renderIngridientsByCategory', menuItem.category);
+        this.localEventEmitter.emit(RENDER_INGRIDIENTS_BY_CATEGORY, menuItem.category);
         this.activateIngridients(menuItem.category);
         this.createPrice();
     }
@@ -66,7 +80,7 @@ export default class Modal {
         this.activePage(menuItem);
         content.innerHTML = '';
 
-        this.eventEmitter.emit('renderIngridientsByCategory', menuItem.category);
+        this.localEventEmitter.emit(RENDER_INGRIDIENTS_BY_CATEGORY, menuItem.category);
         this.activateIngridients(menuItem.category);
     }
 
@@ -85,7 +99,7 @@ export default class Modal {
         this.activePage(menuItem);
         content.innerHTML = '';
 
-        this.eventEmitter.emit('renderIngridientsByCategory', menuItem.category);
+        this.localEventEmitter.emit(RENDER_INGRIDIENTS_BY_CATEGORY, menuItem.category);
         this.activateIngridients(menuItem.category);
     }
 
