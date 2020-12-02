@@ -25,7 +25,7 @@
     "guard-for-in": "off",
     "no-param-reassign": "off",
     // "no-process-exit": "off",
-    // "object-shorthand": "off",
+    "object-shorthand": "off",
     "import/extensions": [
       "error",
       "ignorePackages",
