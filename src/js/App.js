@@ -7,7 +7,7 @@ import Modal from './components/Modal.js';
 import IngridientCard from './components/IngridientCard.js';
 import EVENTS from './components/constants/constants.js';
 
-const { ADD_PRODUCT } = EVENTS;
+const { ADD_IN_BASKET } = EVENTS;
 
 class App {
     constructor() {
@@ -59,11 +59,18 @@ class App {
 
         this.basket = new Basket(this.globalEventEmitter);
         this.basket.render();
+        this.initProductEvents();
     }
 
     initModal() {
         this.modal = new Modal(this.response.modal, this.ingridients, this.globalEventEmitter);
         this.modal.render();
+    }
+
+    initProductEvents() {
+        for (const productCard of this.productCards) {
+            productCard.onAddInBasket(product => this.basket.addProductEvent(product));
+        }
     }
 
     initProductCards() {
