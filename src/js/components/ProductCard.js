@@ -36,11 +36,11 @@ export default class ProductCard {
     }
 
     onChangeQuantity(fn) {
-        this.localEventEmitter.on(CHANGE_QUANTITY, () => fn());
+        this.localEventEmitter.on(CHANGE_QUANTITY, fn, this);
     }
 
     offChangeQuantity() {
-        this.localEventEmitter.off(CHANGE_QUANTITY);
+        this.localEventEmitter.off(CHANGE_QUANTITY, this);
     }
 
     increaseQuantity() {
@@ -56,11 +56,11 @@ export default class ProductCard {
     }
 
     onAddInBasket(fn) {
-        this.localEventEmitter.on(ADD_IN_BASKET, () => fn());
+        this.localEventEmitter.on(ADD_IN_BASKET, fn, this);
     }
 
     offAddInBasket() {
-        this.localEventEmitter.off(ADD_IN_BASKET);
+        this.localEventEmitter.off(ADD_IN_BASKET, this);
     }
 
     addInBasket() {
