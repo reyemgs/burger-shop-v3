@@ -361,7 +361,7 @@ export default class Modal {
 
         inBasketButton.addEventListener('click', () => {
             if (this.currentProduct.inBasket) return;
-            this.addInBasket();
+            this.currentProduct.addInBasket();
             this.close();
         });
 
