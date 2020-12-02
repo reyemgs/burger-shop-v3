@@ -7,10 +7,6 @@ export default class Modal {
 
         this.eventEmitter = emitter;
 
-        this.eventEmitter.on('openModal', product => {
-            this.open(product);
-        });
-
         this.eventEmitter.on('addIngridient', ingridient => {
             this.addIngridient(ingridient);
         });
