@@ -1,7 +1,3 @@
-import EVENTS from './constants/EVENTS.js';
-
-const { ADD_IN_BASKET } = EVENTS;
-
 export default class Basket {
     constructor(emitter) {
         this.basketWrapper = document.querySelector('.basket');
