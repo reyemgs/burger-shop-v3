@@ -19,11 +19,11 @@ export default class MenuList {
         }
     }
 
-    onRenderProductsByCategory(fn) {
+    onRenderProducts(fn) {
         this.eventEmitter.on(RENDER_PRODUCTS_BY_CATEGORY, fn, this);
     }
 
-    offRenderProductsByCategory() {
+    offRenderProducts() {
         this.eventEmitter.off(RENDER_PRODUCTS_BY_CATEGORY, this);
     }
 
