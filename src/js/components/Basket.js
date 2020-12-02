@@ -12,10 +12,6 @@ export default class Basket {
 
         this.globalEventEmitter = emitter;
 
-        // this.globalEventEmitter.on(ADD_IN_BASKET, product => {
-        //     this.addProductEvent(product);
-        // });
-
         this.globalEventEmitter.on('updateBasketTotalPrice', () => {
             this.updateTotalPrice();
         });

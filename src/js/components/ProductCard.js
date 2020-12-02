@@ -86,7 +86,7 @@ export default class ProductCard {
     }
 
     resetDefault() {
-        this.localEventEmitter.emit('resetProduct', this);
+        this.globalEventEmitter.emit('resetProduct', this);
     }
 
     updateQuantity() {

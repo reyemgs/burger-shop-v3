@@ -17,7 +17,7 @@ export default class IngridientCard {
         this.eventEmitter = emitter;
 
         if (this.type === 'single') {
-            this.eventEmitter.emit(SET_DEFAULT_INGRIDIENTS, this);
+            this.eventEmitter.emit('setDefaultIngridients', this);
         }
     }
 
