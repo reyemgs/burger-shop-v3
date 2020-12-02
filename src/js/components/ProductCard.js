@@ -1,7 +1,7 @@
 import EVENTS from './constants/EVENTS.js';
 import EventEmitter from './EventEmitter.js';
 
-const { ADD_IN_BASKET, CHANGE_QUANTITY, OPEN_MODAL } = EVENTS;
+const { ADD_IN_BASKET, CHANGE_QUANTITY, OPEN_MODAL, RESET_DEFAULT_INGRIDIENTS } = EVENTS;
 
 export default class ProductCard {
     constructor(props, emitter) {
@@ -97,8 +97,16 @@ export default class ProductCard {
         }
     }
 
+    onResetDefault(fn) {
+        this.localEventEmitter.on(RESET_DEFAULT_INGRIDIENTS, fn, this);
+    }
+
+    offResetDefault() {
+        this.localEventEmitter.off(RESET_DEFAULT_INGRIDIENTS, this);
+    }
+
     resetDefault() {
-        this.globalEventEmitter.emit('resetProduct', this);
+        this.localEventEmitter.emit(RESET_DEFAULT_INGRIDIENTS, this);
     }
 
     updateQuantity() {

@@ -20,8 +20,6 @@ class App {
         this.modal = null;
 
         this.globalEventEmitter = new EventEmitter();
-
-        this.globalEventEmitter.on('resetProduct', product => this.resetProduct(product));
     }
 
     async request(url) {
@@ -66,6 +64,7 @@ class App {
         for (const productCard of this.productCards) {
             productCard.onAddInBasket(product => this.basket.addProductEvent(product));
             if (productCard.type === 'multiple') {
+                productCard.onResetDefault(product => this.resetIngridients(product));
                 productCard.onOpenModal(product => this.modal.open(product));
             }
         }
@@ -111,7 +110,7 @@ class App {
         }
     }
 
-    resetProduct(product) {
+    resetIngridients(product) {
         const resetedProduct = product;
         const defaultComponents = {
             sizes: '1x',

@@ -1,9 +1,10 @@
 const EVENTS = {
     ADD_IN_BASKET: Symbol('addInBasket'),
+    OPEN_MODAL: Symbol('openModal'),
     CHANGE_QUANTITY: Symbol('changeQuantity'),
     RENDER_PRODUCTS_BY_CATEGORY: Symbol('renderProductsByCategory'),
     RENDER_INGRIDIENTS_BY_CATEGORY: Symbol('renderIngridientsByCategory'),
-    OPEN_MODAL: Symbol('openModal'),
+    RESET_DEFAULT_INGRIDIENTS: Symbol('resetDefaultIngridients'),
 
     UPDATE_BASKET_TOTAL_PRICE: Symbol('updateBasketTotalPrice'),
     UPDATE_BASKET_INGRIDIENTS: Symbol('updateIngridients'),
