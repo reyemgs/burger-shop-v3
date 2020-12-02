@@ -5,9 +5,6 @@ import Basket from './components/Basket.js';
 import EventEmitter from './components/EventEmitter.js';
 import Modal from './components/Modal.js';
 import IngridientCard from './components/IngridientCard.js';
-import EVENTS from './components/constants/constants.js';
-
-const { ADD_IN_BASKET } = EVENTS;
 
 class App {
     constructor() {

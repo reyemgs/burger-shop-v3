@@ -1,4 +1,4 @@
-import EVENTS from './constants/constants.js';
+import EVENTS from './constants/EVENTS.js';
 
 const { SET_DEFAULT_INGRIDIENTS } = EVENTS;
 

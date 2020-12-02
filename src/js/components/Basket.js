@@ -1,4 +1,4 @@
-import EVENTS from './constants/constants.js';
+import EVENTS from './constants/EVENTS.js';
 
 const { ADD_IN_BASKET } = EVENTS;
 
@@ -12,17 +12,17 @@ export default class Basket {
 
         this.globalEventEmitter = emitter;
 
-        this.globalEventEmitter.on(ADD_IN_BASKET, product => {
-            this.addProductEvent(product);
+        // this.globalEventEmitter.on(ADD_IN_BASKET, product => {
+        //     this.addProductEvent(product);
+        // });
+
+        this.globalEventEmitter.on('updateBasketTotalPrice', () => {
+            this.updateTotalPrice();
         });
 
-        // this.globalEventEmitter.on('updateBasketTotalPrice', () => {
-        //     this.updateTotalPrice();
-        // });
-
-        // this.globalEventEmitter.on('updateIngridients', () => {
-        //     this.renderAddedProducts();
-        // });
+        this.globalEventEmitter.on('updateIngridients', () => {
+            this.renderAddedProducts();
+        });
     }
 
     changeQuantityEvent() {

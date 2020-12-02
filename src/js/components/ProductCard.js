@@ -1,4 +1,4 @@
-import EVENTS from './constants/constants.js';
+import EVENTS from './constants/EVENTS.js';
 import EventEmitter from './EventEmitter.js';
 
 const { ADD_IN_BASKET, CHANGE_QUANTITY, SET_DEFAULT_INGRIDIENTS } = EVENTS;
@@ -64,7 +64,7 @@ export default class ProductCard {
     }
 
     addInBasket() {
-        this.globalEventEmitter.emit(ADD_IN_BASKET, this);
+        this.localEventEmitter.emit(ADD_IN_BASKET, this);
     }
 
     addIngridient(ingridient) {
