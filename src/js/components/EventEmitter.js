@@ -12,7 +12,6 @@ export default class EventEmitter {
             const listeners = this.events.get(eventName);
             listeners.push({ object: object, fn: fn });
         }
-        console.log(this.events.get(eventName));
     }
 
     off(eventName, object) {
@@ -21,7 +20,9 @@ export default class EventEmitter {
             for (let i = 0; i < listeners.length; i++) {
                 if (listeners[i].object === object) {
                     listeners.splice(i, 1);
-                    console.log(this.events.get(eventName));
+                    if (listeners.length === 0) {
+                        this.events.delete(eventName);
+                    }
                     break;
                 }
             }
