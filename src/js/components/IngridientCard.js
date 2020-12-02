@@ -1,4 +1,5 @@
 import EVENTS from './constants/EVENTS.js';
+import EventEmitter from './EventEmitter.js';
 
 const { SET_DEFAULT_INGRIDIENTS } = EVENTS;
 
@@ -14,11 +15,24 @@ export default class IngridientCard {
         this.type = props.type;
         this.currentWrapper = null;
 
-        this.eventEmitter = emitter;
+        // this.eventEmitter = emitter;
+        this.eventEmitter = new EventEmitter();
 
         if (this.type === 'single') {
             this.eventEmitter.emit('setDefaultIngridients', this);
         }
+    }
+
+    onSetDefaultIngridients(fn) {
+        this.eventEmitter.on(SET_DEFAULT_INGRIDIENTS, fn, this);
+    }
+
+    offSetDefaultIngridients() {
+        this.eventEmitter.off(SET_DEFAULT_INGRIDIENTS, this);
+    }
+
+    setDefaultIngridients() {
+        this.eventEmitter.emit(SET_DEFAULT_INGRIDIENTS, this);
     }
 
     addActiveClass() {
