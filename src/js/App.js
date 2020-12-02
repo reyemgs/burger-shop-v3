@@ -21,10 +21,6 @@ class App {
 
         this.globalEventEmitter = new EventEmitter();
 
-        this.globalEventEmitter.on('renderProductsByCategory', category => {
-            this.renderProductsByCategory(category);
-        });
-
         this.globalEventEmitter.on('renderIngridientsByCategory', category => {
             this.renderIngridientsByCategory(category);
         });
@@ -51,8 +47,11 @@ class App {
     }
 
     initSideBar() {
-        this.menuList = new MenuList(this.response.categories, this.globalEventEmitter);
+        this.menuList = new MenuList(this.response.categories);
         this.menuList.render();
+        this.menuList.onRenderProductsByCategory(category => {
+            this.renderProductsByCategory(category);
+        });
         this.menuList.onPage('pizza');
 
         this.basket = new Basket(this.globalEventEmitter);
@@ -69,7 +68,6 @@ class App {
             productCard.onAddInBasket(product => this.basket.addProductEvent(product));
             if (productCard.type === 'multiple') {
                 productCard.onOpenModal(product => this.modal.open(product));
-                console.log(productCard.localEventEmitter.events);
             }
         }
     }

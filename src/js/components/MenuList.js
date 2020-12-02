@@ -1,7 +1,12 @@
+import EVENTS from './constants/EVENTS.js';
+import EventEmitter from './EventEmitter.js';
+
+const { RENDER_PRODUCTS_BY_CATEGORY } = EVENTS;
+
 export default class MenuList {
-    constructor(props, emitter) {
+    constructor(props) {
         this.items = props;
-        this.eventEmitter = emitter;
+        this.eventEmitter = new EventEmitter();
     }
 
     active(category) {
@@ -14,10 +19,18 @@ export default class MenuList {
         }
     }
 
+    onRenderProductsByCategory(fn) {
+        this.eventEmitter.on(RENDER_PRODUCTS_BY_CATEGORY, fn, this);
+    }
+
+    offRenderProductsByCategory() {
+        this.eventEmitter.off(RENDER_PRODUCTS_BY_CATEGORY, this);
+    }
+
     onPage(category) {
         const rightSideWrapper = document.querySelector('#rightside-wrapper');
         rightSideWrapper.innerHTML = '';
-        this.eventEmitter.emit('renderProductsByCategory', category);
+        this.eventEmitter.emit(RENDER_PRODUCTS_BY_CATEGORY, category);
         this.active(category);
     }
 
