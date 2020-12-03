@@ -33,12 +33,7 @@ export default class Basket {
             currentProduct.inBasket = true;
             currentProduct.changeButton();
         }
-        this.renderAddedProducts();
-        this.productWrapper.classList.add(
-            'animate__animated',
-            'animate__bounceInLeft',
-            'animate__faster'
-        );
+        this.renderProduct(product);
     }
 
     removeProduct(product) {
@@ -58,7 +53,7 @@ export default class Basket {
         }
 
         this.addedProducts.splice(index, 1);
-        this.renderAddedProducts();
+        currentProduct.basketProductWrapper.remove();
     }
 
     updateTotalPrice() {
@@ -74,54 +69,42 @@ export default class Basket {
         totalPriceLabel.innerHTML = `Итого: ${this.totalPrice} руб.`;
     }
 
-    renderAddedProducts() {
+    renderProduct(product) {
         const contentWrapper = document.querySelector('.basket-content-wrapper');
-        contentWrapper.innerHTML = '';
-        for (const item of this.addedProducts) {
-            const productWrapper = document.createElement('div');
-            productWrapper.classList.add('basket-product');
-            this.productWrapper = productWrapper;
+        const addedProduct = product;
 
-            const productName = document.createElement('span');
-            productName.className = 'basket-product-name';
-            productName.innerHTML = item.name;
+        const productWrapper = document.createElement('div');
+        productWrapper.classList.add('basket-product');
+        addedProduct.basketProductWrapper = productWrapper;
 
-            const productQuantity = document.createElement('span');
-            productQuantity.className = 'basket-product-quantity';
-            productQuantity.innerHTML = item.quantity;
-            item.basketQuantityElem = productQuantity;
+        const productName = document.createElement('span');
+        productName.className = 'basket-product-name';
+        productName.innerHTML = addedProduct.name;
 
-            const removeButton = document.createElement('div');
-            removeButton.className = 'remove-button';
-            removeButton.innerHTML = '<i class="fas fa-trash-alt fa-lg"></i>';
+        const productQuantity = document.createElement('span');
+        productQuantity.className = 'basket-product-quantity';
+        productQuantity.innerHTML = addedProduct.quantity;
+        addedProduct.basketQuantityElem = productQuantity;
 
-            removeButton.addEventListener('click', () => {
-                const wrapper = removeButton.closest('.basket-product');
-                wrapper.classList.remove(
-                    'animate__animated',
-                    'animate__bounceInLeft',
-                    'animate__faster'
-                );
-                wrapper.classList.add('animate__animated', 'animate__bounceOutLeft', 'animate__faster');
-                setTimeout(() => {
-                    this.removeProduct(item);
-                    this.updateTotalPrice();
-                }, 300);
-            });
+        const removeButton = document.createElement('div');
+        removeButton.className = 'remove-button';
+        removeButton.innerHTML = '<i class="fas fa-trash-alt fa-lg"></i>';
+        removeButton.addEventListener('click', () => {
+            this.removeProduct(product);
+            this.updateTotalPrice();
+        });
 
-            if (item.type === 'multiple') {
-                productWrapper.append(
-                    productName,
-                    productQuantity,
-                    removeButton,
-                    this.renderIngridients(item)
-                );
-            } else {
-                productWrapper.append(productName, productQuantity, removeButton);
-            }
-
-            contentWrapper.append(productWrapper);
+        if (addedProduct.type === 'multiple') {
+            productWrapper.append(
+                productName,
+                productQuantity,
+                removeButton,
+                this.renderIngridients(addedProduct)
+            );
+        } else {
+            productWrapper.append(productName, productQuantity, removeButton);
         }
+        contentWrapper.append(productWrapper);
     }
 
     renderIngridients(product) {
@@ -139,6 +122,24 @@ export default class Basket {
             }
         }
         return ingridientWrapper;
+    }
+
+    updateIngridients(product) {
+        const ingridientWrapper = document.querySelector('.basket-ingridient-wrapper');
+        const productWrapper = product.basketProductWrapper;
+        ingridientWrapper.innerHTML = '';
+
+        for (const ingridient of product.addedIngridients) {
+            const li = document.createElement('li');
+            li.className = 'basket-ingridient';
+            li.textContent += ingridient.name;
+            if (ingridient.type === 'single') {
+                ingridientWrapper.prepend(li);
+            } else {
+                ingridientWrapper.append(li);
+            }
+        }
+        productWrapper.append(ingridientWrapper);
     }
 
     render() {
