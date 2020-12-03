@@ -24,6 +24,8 @@ export default class ProductCard {
         this.inBasketButton = null;
         this.quantityElem = null;
         this.basketQuantityElem = null;
+        this.basketProductWrapper = null;
+        this.basketIngridientWrapper = null;
 
         this.addedIngridients = [];
 
