@@ -120,7 +120,6 @@ class App {
     }
 
     resetIngridients(product) {
-        console.clear();
         const resetedProduct = product;
 
         resetedProduct.components = JSON.parse(JSON.stringify(resetedProduct.defaultComponents));
