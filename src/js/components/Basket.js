@@ -5,10 +5,11 @@ export default class Basket {
         this.totalPrice = 0;
 
         this.productWrapper = null;
+        this.quantityElem = null;
     }
 
-    changeQuantityEvent() {
-        this.renderAddedProducts();
+    changeQuantityEvent(product) {
+        this.updateQuantity(product);
         this.updateTotalPrice();
     }
 
@@ -17,12 +18,14 @@ export default class Basket {
         this.updateTotalPrice();
     }
 
+    updateQuantity(product) {
+        product.basketQuantityElem.innerHTML = product.quantity;
+    }
+
     addProduct(product) {
         const currentProduct = product;
 
-        currentProduct.onChangeQuantity(() => {
-            this.changeQuantityEvent();
-        });
+        currentProduct.onChangeQuantity(productCard => this.changeQuantityEvent(productCard));
 
         const addedProduct = this.addedProducts.find(item => item === product);
         if (!addedProduct) {
@@ -86,6 +89,7 @@ export default class Basket {
             const productQuantity = document.createElement('span');
             productQuantity.className = 'basket-product-quantity';
             productQuantity.innerHTML = item.quantity;
+            item.basketQuantityElem = productQuantity;
 
             const removeButton = document.createElement('div');
             removeButton.className = 'remove-button';
