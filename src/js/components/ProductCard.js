@@ -19,6 +19,7 @@ export default class ProductCard {
 
         this.quantity = 1;
         this.priceWithIngridients = this.price;
+        this.defaultComponents = null;
         this.inBasket = false;
         this.inBasketButton = null;
         this.quantityElem = null;
@@ -26,6 +27,10 @@ export default class ProductCard {
         this.addedIngridients = [];
 
         this.eventEmitter = new EventEmitter();
+    }
+
+    setDefaultComponents() {
+        this.defaultComponents = JSON.parse(JSON.stringify(this.components));
     }
 
     onChangeQuantity(fn) {
@@ -86,12 +91,6 @@ export default class ProductCard {
     removeIngridient(ingridient) {
         const index = this.addedIngridients.findIndex(item => item === ingridient);
         this.addedIngridients.splice(index, 1);
-    }
-
-    setDefaultIngridients(ingridient) {
-        if (this.type === 'multiple' && this.components[ingridient.category] === ingridient.key) {
-            this.addedIngridients.push(ingridient);
-        }
     }
 
     onResetDefault(fn) {

@@ -65,6 +65,8 @@ class App {
             if (productCard.type === 'multiple') {
                 productCard.onResetDefault(product => this.resetIngridients(product));
                 productCard.onOpenModal(product => this.modal.open(product));
+                productCard.setDefaultComponents();
+                productCard.resetDefault();
             }
         }
     }
@@ -118,21 +120,23 @@ class App {
     }
 
     resetIngridients(product) {
+        console.clear();
         const resetedProduct = product;
-        const defaultComponents = {
-            sizes: '1x',
-            breads: 'white-italian',
-            vegetables: [],
-            sauces: [],
-            fillings: [],
-        };
-        resetedProduct.components = defaultComponents;
+
+        resetedProduct.components = JSON.parse(JSON.stringify(resetedProduct.defaultComponents));
         resetedProduct.addedIngridients = [];
+
         for (const ingridient of this.ingridientCards) {
-            if (
-                resetedProduct.type === 'multiple' &&
-                resetedProduct.components[ingridient.category] === ingridient.key
-            ) {
+            const addedComponents = resetedProduct.components[ingridient.category];
+
+            if (Array.isArray(addedComponents)) {
+                for (const multipleIngridient of addedComponents) {
+
+                    if (multipleIngridient === ingridient.key) {
+                        resetedProduct.addedIngridients.push(ingridient);
+                    }
+                }
+            } else if (resetedProduct.components[ingridient.category] === ingridient.key) {
                 resetedProduct.addedIngridients.push(ingridient);
             }
         }

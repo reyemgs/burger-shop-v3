@@ -23,18 +23,6 @@ export default class IngridientCard {
         this.eventEmitter = new EventEmitter();
     }
 
-    onSetDefaultIngridients(fn) {
-        this.eventEmitter.on(SET_DEFAULT_INGRIDIENTS, fn, this);
-    }
-
-    offSetDefaultIngridients() {
-        this.eventEmitter.off(SET_DEFAULT_INGRIDIENTS, this);
-    }
-
-    setDefaultIngridients() {
-        this.eventEmitter.emit(SET_DEFAULT_INGRIDIENTS, this);
-    }
-
     onAddIngridient(fn) {
         this.eventEmitter.on(ADD_INGRIDIENT, fn, this);
     }
