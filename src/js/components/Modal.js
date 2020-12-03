@@ -1,33 +1,36 @@
 import EVENTS from './constants/EVENTS.js';
 import EventEmitter from './EventEmitter.js';
 
-const { RENDER_INGRIDIENTS_BY_CATEGORY } = EVENTS;
+const { RENDER_INGRIDIENTS_BY_CATEGORY, UPDATE_BASKET_INGRIDIENTS } = EVENTS;
 
 export default class Modal {
-    constructor(props, ingridients, emitter) {
+    constructor(props, ingridients) {
         this.navigationItems = props;
         this.ingridients = ingridients;
         this.currentProduct = null;
         this.currentPage = null;
 
-        this.eventEmitter = emitter;
-        this.localEventEmitter = new EventEmitter();
+        this.eventEmitter = new EventEmitter();
+    }
 
-        this.eventEmitter.on('addIngridient', ingridient => {
-            this.addIngridient(ingridient);
-        });
+    onUpdateIngridients(fn) {
+        this.eventEmitter.on(UPDATE_BASKET_INGRIDIENTS, fn, this);
+    }
 
-        this.eventEmitter.on('updateModalPrice', () => {
-            this.updatePrice();
-        });
+    offUpdateBasketIngridients() {
+        this.eventEmitter.off(UPDATE_BASKET_INGRIDIENTS, this);
+    }
+
+    updateBasketIngridients() {
+        this.eventEmitter.emit(UPDATE_BASKET_INGRIDIENTS);
     }
 
     onRenderIngridients(fn) {
-        this.localEventEmitter.on(RENDER_INGRIDIENTS_BY_CATEGORY, fn, this);
+        this.eventEmitter.on(RENDER_INGRIDIENTS_BY_CATEGORY, fn, this);
     }
 
     offRenderIngridients() {
-        this.localEventEmitter.off(RENDER_INGRIDIENTS_BY_CATEGORY, this);
+        this.eventEmitter.off(RENDER_INGRIDIENTS_BY_CATEGORY, this);
     }
 
     open(product) {
@@ -42,7 +45,7 @@ export default class Modal {
         document.body.style.overflow = 'hidden';
         content.innerHTML = '';
 
-        this.localEventEmitter.emit(RENDER_INGRIDIENTS_BY_CATEGORY, menuItem.category);
+        this.eventEmitter.emit(RENDER_INGRIDIENTS_BY_CATEGORY, menuItem.category);
         this.activateIngridients(menuItem.category);
         this.createPrice();
     }
@@ -80,7 +83,7 @@ export default class Modal {
         this.activePage(menuItem);
         content.innerHTML = '';
 
-        this.localEventEmitter.emit(RENDER_INGRIDIENTS_BY_CATEGORY, menuItem.category);
+        this.eventEmitter.emit(RENDER_INGRIDIENTS_BY_CATEGORY, menuItem.category);
         this.activateIngridients(menuItem.category);
     }
 
@@ -99,7 +102,7 @@ export default class Modal {
         this.activePage(menuItem);
         content.innerHTML = '';
 
-        this.localEventEmitter.emit(RENDER_INGRIDIENTS_BY_CATEGORY, menuItem.category);
+        this.eventEmitter.emit(RENDER_INGRIDIENTS_BY_CATEGORY, menuItem.category);
         this.activateIngridients(menuItem.category);
     }
 
@@ -183,7 +186,7 @@ export default class Modal {
         product.addIngridient(ingridient);
         this.calculatePrice();
         ingridient.addActiveClass();
-        this.eventEmitter.emit('updateIngridients');
+        this.updateBasketIngridients();
     }
 
     addMultiple(ingridient) {
@@ -198,7 +201,7 @@ export default class Modal {
             product.addIngridient(ingridient);
             this.calculatePrice();
             ingridient.addActiveClass();
-            this.eventEmitter.emit('updateIngridients');
+            this.updateBasketIngridients();
             return;
         }
 
@@ -206,7 +209,7 @@ export default class Modal {
         product.removeIngridient(ingridient);
         this.calculatePrice();
         ingridient.removeActiveClass();
-        this.eventEmitter.emit('updateIngridients');
+        this.updateBasketIngridients();
     }
 
     removeIngridient(ingridient) {
@@ -252,14 +255,14 @@ export default class Modal {
         if (this.currentProduct.quantity === 99) return;
         this.currentProduct.quantity += 1;
         this.currentProduct.updateQuantity();
-        this.eventEmitter.emit('changeQuantity');
+        this.currentProduct.changeQuantity();
     }
 
     decreaseQuantity() {
         if (this.currentProduct.quantity === 1) return;
         this.currentProduct.quantity -= 1;
         this.currentProduct.updateQuantity();
-        this.eventEmitter.emit('changeQuantity');
+        this.currentProduct.changeQuantity();
     }
 
     changeButton() {

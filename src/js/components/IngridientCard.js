@@ -1,10 +1,15 @@
 import EVENTS from './constants/EVENTS.js';
 import EventEmitter from './EventEmitter.js';
 
-const { SET_DEFAULT_INGRIDIENTS } = EVENTS;
+const {
+    ADD_INGRIDIENT,
+    SET_DEFAULT_INGRIDIENTS,
+    UPDATE_BASKET_TOTAL_PRICE,
+    UPDATE_MODAL_PRICE,
+} = EVENTS;
 
 export default class IngridientCard {
-    constructor(props, emitter) {
+    constructor(props) {
         this.id = props.id;
         this.name = props.name;
         this.price = props.price;
@@ -15,12 +20,7 @@ export default class IngridientCard {
         this.type = props.type;
         this.currentWrapper = null;
 
-        // this.eventEmitter = emitter;
         this.eventEmitter = new EventEmitter();
-
-        if (this.type === 'single') {
-            this.eventEmitter.emit('setDefaultIngridients', this);
-        }
     }
 
     onSetDefaultIngridients(fn) {
@@ -33,6 +33,42 @@ export default class IngridientCard {
 
     setDefaultIngridients() {
         this.eventEmitter.emit(SET_DEFAULT_INGRIDIENTS, this);
+    }
+
+    onAddIngridient(fn) {
+        this.eventEmitter.on(ADD_INGRIDIENT, fn, this);
+    }
+
+    offAddIngridient() {
+        this.eventEmitter.off(ADD_INGRIDIENT, this);
+    }
+
+    addIngridient() {
+        this.eventEmitter.emit(ADD_INGRIDIENT, this);
+    }
+
+    onUpdateBasketTotalPrice(fn) {
+        this.eventEmitter.on(UPDATE_BASKET_TOTAL_PRICE, fn, this);
+    }
+
+    offUpdateBasketTotalPrice() {
+        this.eventEmitter.off(UPDATE_BASKET_TOTAL_PRICE, this);
+    }
+
+    updateBasketTotalPrice() {
+        this.eventEmitter.emit(UPDATE_BASKET_TOTAL_PRICE);
+    }
+
+    onUpdateModalPrice(fn) {
+        this.eventEmitter.on(UPDATE_MODAL_PRICE, fn, this);
+    }
+
+    offUpdateModalPrice() {
+        this.eventEmitter.off(UPDATE_MODAL_PRICE, this);
+    }
+
+    updateModalPrice() {
+        this.eventEmitter.emit(UPDATE_MODAL_PRICE);
     }
 
     addActiveClass() {
@@ -48,9 +84,9 @@ export default class IngridientCard {
         wrapper.className = 'ingridient-wrapper';
         wrapper.setAttribute('data-ingridient-id', this.id);
         wrapper.addEventListener('click', () => {
-            this.eventEmitter.emit('addIngridient', this);
-            this.eventEmitter.emit('updateModalPrice');
-            this.eventEmitter.emit('updateBasketTotalPrice');
+            this.addIngridient();
+            this.updateModalPrice();
+            this.updateBasketTotalPrice();
         });
         this.currentWrapper = wrapper;
 

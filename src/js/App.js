@@ -2,7 +2,6 @@ import Fetch from './api/Fetch.js';
 import ProductCard from './components/ProductCard.js';
 import MenuList from './components/MenuList.js';
 import Basket from './components/Basket.js';
-import EventEmitter from './components/EventEmitter.js';
 import Modal from './components/Modal.js';
 import IngridientCard from './components/IngridientCard.js';
 
@@ -18,8 +17,6 @@ class App {
         this.menuList = null;
         this.basket = null;
         this.modal = null;
-
-        this.globalEventEmitter = new EventEmitter();
     }
 
     async request(url) {
@@ -38,6 +35,7 @@ class App {
         this.initSideBar();
         this.initModal();
         this.initProductEvents();
+        this.initIngridientEvents();
     }
 
     initSideBar() {
@@ -48,16 +46,17 @@ class App {
         });
         this.menuList.onPage('pizza');
 
-        this.basket = new Basket(this.globalEventEmitter);
+        this.basket = new Basket();
         this.basket.render();
     }
 
     initModal() {
-        this.modal = new Modal(this.response.modal, this.ingridients, this.globalEventEmitter);
+        this.modal = new Modal(this.response.modal, this.ingridients);
         this.modal.render();
         this.modal.onRenderIngridients(category => {
             this.renderIngridientsByCategory(category);
         });
+        this.modal.onUpdateIngridients(() => this.basket.renderAddedProducts());
     }
 
     initProductEvents() {
@@ -70,12 +69,20 @@ class App {
         }
     }
 
+    initIngridientEvents() {
+        for (const ingridientCard of this.ingridientCards) {
+            ingridientCard.onAddIngridient(ingridient => this.modal.addIngridient(ingridient));
+            ingridientCard.onUpdateModalPrice(() => this.modal.updatePrice());
+            ingridientCard.onUpdateBasketTotalPrice(() => this.basket.updateTotalPrice());
+        }
+    }
+
     initProductCards() {
         let id = 1;
         for (const product of this.response.menu) {
             product.id = id++;
             product.marketImage = this.response.markets[product.market].image;
-            const productCard = new ProductCard(product, this.globalEventEmitter);
+            const productCard = new ProductCard(product);
             this.productCards.push(productCard);
         }
     }
@@ -90,7 +97,7 @@ class App {
                 ingridient.category = category;
                 ingridient.key = key;
 
-                const ingridientCard = new IngridientCard(ingridient, this.globalEventEmitter);
+                const ingridientCard = new IngridientCard(ingridient);
                 this.ingridientCards.push(ingridientCard);
             }
         }

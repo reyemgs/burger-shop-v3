@@ -4,7 +4,7 @@ import EventEmitter from './EventEmitter.js';
 const { ADD_IN_BASKET, CHANGE_QUANTITY, OPEN_MODAL, RESET_DEFAULT_INGRIDIENTS } = EVENTS;
 
 export default class ProductCard {
-    constructor(props, emitter) {
+    constructor(props) {
         this.id = props.id;
         this.name = props.name;
         this.image = props.image;
@@ -25,58 +25,55 @@ export default class ProductCard {
 
         this.addedIngridients = [];
 
-        this.globalEventEmitter = emitter;
-        this.localEventEmitter = new EventEmitter();
-
-        if (this.type === 'multiple') {
-            this.globalEventEmitter.on('setDefaultIngridients', ingridient =>
-                this.setDefaultIngridients(ingridient)
-            );
-        }
+        this.eventEmitter = new EventEmitter();
     }
 
     onChangeQuantity(fn) {
-        this.localEventEmitter.on(CHANGE_QUANTITY, fn, this);
+        this.eventEmitter.on(CHANGE_QUANTITY, fn, this);
     }
 
     offChangeQuantity() {
-        this.localEventEmitter.off(CHANGE_QUANTITY, this);
+        this.eventEmitter.off(CHANGE_QUANTITY, this);
     }
 
     increaseQuantity() {
         if (this.quantity === 99) return;
         this.quantity += 1;
-        this.localEventEmitter.emit(CHANGE_QUANTITY);
+        this.changeQuantity();
     }
 
     decreaseQuantity() {
         if (this.quantity === 1) return;
         this.quantity -= 1;
-        this.localEventEmitter.emit(CHANGE_QUANTITY);
+        this.changeQuantity();
+    }
+
+    changeQuantity() {
+        this.eventEmitter.emit(CHANGE_QUANTITY);
     }
 
     onAddInBasket(fn) {
-        this.localEventEmitter.on(ADD_IN_BASKET, fn, this);
+        this.eventEmitter.on(ADD_IN_BASKET, fn, this);
     }
 
     offAddInBasket() {
-        this.localEventEmitter.off(ADD_IN_BASKET, this);
+        this.eventEmitter.off(ADD_IN_BASKET, this);
     }
 
     addInBasket() {
-        this.localEventEmitter.emit(ADD_IN_BASKET, this);
+        this.eventEmitter.emit(ADD_IN_BASKET, this);
     }
 
     onOpenModal(fn) {
-        this.localEventEmitter.on(OPEN_MODAL, fn, this);
+        this.eventEmitter.on(OPEN_MODAL, fn, this);
     }
 
     offOpenModal() {
-        this.localEventEmitter.off(OPEN_MODAL, this);
+        this.eventEmitter.off(OPEN_MODAL, this);
     }
 
     openModal() {
-        this.localEventEmitter.emit(OPEN_MODAL, this);
+        this.eventEmitter.emit(OPEN_MODAL, this);
     }
 
     addIngridient(ingridient) {
@@ -98,15 +95,15 @@ export default class ProductCard {
     }
 
     onResetDefault(fn) {
-        this.localEventEmitter.on(RESET_DEFAULT_INGRIDIENTS, fn, this);
+        this.eventEmitter.on(RESET_DEFAULT_INGRIDIENTS, fn, this);
     }
 
     offResetDefault() {
-        this.localEventEmitter.off(RESET_DEFAULT_INGRIDIENTS, this);
+        this.eventEmitter.off(RESET_DEFAULT_INGRIDIENTS, this);
     }
 
     resetDefault() {
-        this.localEventEmitter.emit(RESET_DEFAULT_INGRIDIENTS, this);
+        this.eventEmitter.emit(RESET_DEFAULT_INGRIDIENTS, this);
     }
 
     updateQuantity() {
