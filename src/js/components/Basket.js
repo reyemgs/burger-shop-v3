@@ -128,7 +128,9 @@ export default class Basket {
     updateIngridients(product) {
         const ingridientWrapper = product.basketIngridientWrapper;
         const productWrapper = product.basketProductWrapper;
-        ingridientWrapper.innerHTML = '';
+        if (ingridientWrapper) {
+            ingridientWrapper.innerHTML = '';
+        }
 
         for (const ingridient of product.addedIngridients) {
             const li = document.createElement('li');
