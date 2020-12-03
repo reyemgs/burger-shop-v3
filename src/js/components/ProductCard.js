@@ -23,6 +23,7 @@ export default class ProductCard {
         this.inBasket = false;
         this.inBasketButton = null;
         this.quantityElem = null;
+        this.basketQuantityElem = null;
 
         this.addedIngridients = [];
 
@@ -54,7 +55,7 @@ export default class ProductCard {
     }
 
     changeQuantity() {
-        this.eventEmitter.emit(CHANGE_QUANTITY);
+        this.eventEmitter.emit(CHANGE_QUANTITY, this);
     }
 
     onAddInBasket(fn) {
