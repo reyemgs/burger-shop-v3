@@ -110,6 +110,7 @@ export default class Basket {
     renderIngridients(product) {
         const ingridientWrapper = document.createElement('ul');
         ingridientWrapper.className = 'basket-ingridient-wrapper';
+        product.basketIngridientWrapper = ingridientWrapper;
 
         for (const ingridient of product.addedIngridients) {
             const li = document.createElement('li');
@@ -125,7 +126,7 @@ export default class Basket {
     }
 
     updateIngridients(product) {
-        const ingridientWrapper = document.querySelector('.basket-ingridient-wrapper');
+        const ingridientWrapper = product.basketIngridientWrapper;
         const productWrapper = product.basketProductWrapper;
         ingridientWrapper.innerHTML = '';
 
