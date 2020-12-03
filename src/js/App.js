@@ -131,7 +131,6 @@ class App {
 
             if (Array.isArray(addedComponents)) {
                 for (const multipleIngridient of addedComponents) {
-
                     if (multipleIngridient === ingridient.key) {
                         resetedProduct.addedIngridients.push(ingridient);
                     }

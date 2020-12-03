@@ -1,12 +1,7 @@
 import EVENTS from './constants/EVENTS.js';
 import EventEmitter from './EventEmitter.js';
 
-const {
-    ADD_INGRIDIENT,
-    SET_DEFAULT_INGRIDIENTS,
-    UPDATE_BASKET_TOTAL_PRICE,
-    UPDATE_MODAL_PRICE,
-} = EVENTS;
+const { ADD_INGRIDIENT, UPDATE_BASKET_TOTAL_PRICE, UPDATE_MODAL_PRICE } = EVENTS;
 
 export default class IngridientCard {
     constructor(props) {
