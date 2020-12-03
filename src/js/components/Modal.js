@@ -22,7 +22,7 @@ export default class Modal {
     }
 
     updateBasketIngridients() {
-        this.eventEmitter.emit(UPDATE_BASKET_INGRIDIENTS);
+        this.eventEmitter.emit(UPDATE_BASKET_INGRIDIENTS, this.currentProduct);
     }
 
     onRenderIngridients(fn) {

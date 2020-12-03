@@ -56,7 +56,7 @@ class App {
         this.modal.onRenderIngridients(category => {
             this.renderIngridientsByCategory(category);
         });
-        this.modal.onUpdateIngridients(() => this.basket.renderAddedProducts());
+        this.modal.onUpdateIngridients(product => this.basket.updateIngridients(product));
     }
 
     initProductEvents() {
