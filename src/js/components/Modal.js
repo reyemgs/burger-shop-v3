@@ -24,10 +24,6 @@ export default class Modal {
     updateBasketIngridients() {
         if (this.currentProduct.inBasket) {
             this.eventEmitter.emit(UPDATE_BASKET_INGRIDIENTS, this.currentProduct);
-            console.log(
-                '[EMIT] UPDATE_BASKET_INGRIDIENTS:',
-                this.eventEmitter.events.get(UPDATE_BASKET_INGRIDIENTS)
-            );
         }
     }
 
@@ -52,10 +48,7 @@ export default class Modal {
         content.innerHTML = '';
 
         this.eventEmitter.emit(RENDER_INGRIDIENTS_BY_CATEGORY, menuItem.category);
-        console.log(
-            '[EMIT] RENDER_IGNRIDIENTS_BY_CATEGORY:',
-            this.eventEmitter.events.get(RENDER_INGRIDIENTS_BY_CATEGORY)
-        );
+
         this.activateIngridients(menuItem.category);
         this.calculatePrice();
         this.createPrice();
@@ -95,10 +88,6 @@ export default class Modal {
         content.innerHTML = '';
 
         this.eventEmitter.emit(RENDER_INGRIDIENTS_BY_CATEGORY, menuItem.category);
-        console.log(
-            '[EMIT] RENDER_IGNRIDIENTS_BY_CATEGORY:',
-            this.eventEmitter.events.get(RENDER_INGRIDIENTS_BY_CATEGORY)
-        );
         this.activateIngridients(menuItem.category);
     }
 
@@ -118,10 +107,6 @@ export default class Modal {
         content.innerHTML = '';
 
         this.eventEmitter.emit(RENDER_INGRIDIENTS_BY_CATEGORY, menuItem.category);
-        console.log(
-            '[EMIT] RENDER_IGNRIDIENTS_BY_CATEGORY',
-            this.eventEmitter.events.get(RENDER_INGRIDIENTS_BY_CATEGORY)
-        );
         this.activateIngridients(menuItem.category);
     }
 

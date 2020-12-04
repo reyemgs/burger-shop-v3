@@ -28,8 +28,6 @@ export default class IngridientCard {
 
     addIngridient() {
         this.eventEmitter.emit(ADD_INGRIDIENT, this);
-
-        console.log('[EMIT] ADD_INGRIDIENT:', this.eventEmitter.events.get(ADD_INGRIDIENT));
     }
 
     onUpdateBasketTotalPrice(fn) {
@@ -42,11 +40,6 @@ export default class IngridientCard {
 
     updateBasketTotalPrice() {
         this.eventEmitter.emit(UPDATE_BASKET_TOTAL_PRICE);
-
-        console.log(
-            '[EMIT] UPDATE_BASKET_TOTAL_PRICE:',
-            this.eventEmitter.events.get(UPDATE_BASKET_TOTAL_PRICE)
-        );
     }
 
     onUpdateModalPrice(fn) {
@@ -59,8 +52,6 @@ export default class IngridientCard {
 
     updateModalPrice() {
         this.eventEmitter.emit(UPDATE_MODAL_PRICE);
-
-        console.log('[EMIT] UPDATE_MODAL_PRICE:', this.eventEmitter.events.get(UPDATE_MODAL_PRICE));
     }
 
     addActiveClass() {

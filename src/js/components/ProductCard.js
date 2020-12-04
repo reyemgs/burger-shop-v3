@@ -74,8 +74,6 @@ export default class ProductCard {
 
     addInBasket() {
         this.eventEmitter.emit(ADD_IN_BASKET, this);
-
-        console.log('[EMIT] ADD_IN_BASKET:', this.eventEmitter.events.get(ADD_IN_BASKET));
     }
 
     onOpenModal(fn) {
@@ -88,8 +86,6 @@ export default class ProductCard {
 
     openModal() {
         this.eventEmitter.emit(OPEN_MODAL, this);
-
-        console.log('[EMIT] OPEN_MODAL:', this.eventEmitter.events.get(OPEN_MODAL));
     }
 
     addIngridient(ingridient) {

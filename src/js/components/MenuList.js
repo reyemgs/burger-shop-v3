@@ -31,10 +31,6 @@ export default class MenuList {
         const rightSideWrapper = document.querySelector('#rightside-wrapper');
         rightSideWrapper.innerHTML = '';
         this.eventEmitter.emit(RENDER_PRODUCTS_BY_CATEGORY, category);
-        console.log(
-            '[EMIT] RENDER_PRODUCTS_BY_CATEGORY:',
-            this.eventEmitter.events.get(RENDER_PRODUCTS_BY_CATEGORY)
-        );
         this.active(category);
     }
 
