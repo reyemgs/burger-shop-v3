@@ -17,10 +17,10 @@ export default class EventEmitter {
         for (let i = 0; i < listeners.length; i++) {
             if (listeners[i] === fn) {
                 listeners.splice(i, 1);
-                // if (listeners.length === 0) {
-                //     this.events.delete(eventName);
-                // }
-                // break;
+                if (listeners.length === 0) {
+                    this.events.delete(eventName);
+                }
+                break;
             }
         }
     }
