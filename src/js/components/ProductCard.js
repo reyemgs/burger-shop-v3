@@ -66,14 +66,10 @@ export default class ProductCard {
 
     onAddInBasket(fn) {
         this.eventEmitter.on(ADD_IN_BASKET, fn);
-
-        console.log('[ON] ADD_IN_BASKET:', this.eventEmitter.events.get(ADD_IN_BASKET));
     }
 
     offAddInBasket(fn) {
         this.eventEmitter.off(ADD_IN_BASKET, fn);
-
-        console.log('[OFF] ADD_IN_BASKET:', this.eventEmitter.events.get(ADD_IN_BASKET) || 'empty');
     }
 
     addInBasket() {
@@ -84,14 +80,10 @@ export default class ProductCard {
 
     onOpenModal(fn) {
         this.eventEmitter.on(OPEN_MODAL, fn);
-
-        console.log('[ON] OPEN_MODAL:', this.eventEmitter.events.get(OPEN_MODAL));
     }
 
     offOpenModal(fn) {
         this.eventEmitter.off(OPEN_MODAL, fn);
-
-        console.log('[OFF] OPEN_MODAL:', this.eventEmitter.events.get(OPEN_MODAL) || 'empty');
     }
 
     openModal() {
@@ -114,36 +106,21 @@ export default class ProductCard {
 
     onResetDefault(fn) {
         this.eventEmitter.on(RESET_DEFAULT_INGRIDIENTS, fn, this);
-
-        console.log(
-            '[ON] RESET_DEFAULT_INGRIDIENTS:',
-            this.eventEmitter.events.get(RESET_DEFAULT_INGRIDIENTS)
-        );
     }
 
     offResetDefault() {
         this.eventEmitter.off(RESET_DEFAULT_INGRIDIENTS, this);
-
-        console.log(
-            '[OFF] RESET_DEFAULT_INGRIDIENTS:',
-            this.eventEmitter.events.get(RESET_DEFAULT_INGRIDIENTS) || 'empty'
-        );
     }
 
     resetDefault() {
         this.eventEmitter.emit(RESET_DEFAULT_INGRIDIENTS, this);
-
-        console.log(
-            '[EMIT] RESET_DEFAULT_INGRIDIENTS:',
-            this.eventEmitter.events.get(RESET_DEFAULT_INGRIDIENTS)
-        );
     }
 
     updateQuantity() {
         this.quantityElem.innerHTML = this.quantity;
     }
 
-    changeButton() {
+    changeButton() {м
         if (this.inBasket) {
             if (this.type === 'multiple') {
                 this.inBasketButton.innerHTML = 'ИЗМЕНИТЬ';
