@@ -38,12 +38,10 @@ export default class ProductCard {
 
     onChangeQuantity(fn) {
         this.eventEmitter.on(CHANGE_QUANTITY, fn);
-        console.log('[ON] CHANGE_QUANTITY:', this.eventEmitter.events.get(CHANGE_QUANTITY));
     }
 
     offChangeQuantity(fn) {
         this.eventEmitter.off(CHANGE_QUANTITY, fn);
-        console.log('[OFF] CHANGE_QUANTITY:', this.eventEmitter.events.get(CHANGE_QUANTITY) || 'empty');
     }
 
     increaseQuantity() {
@@ -59,9 +57,10 @@ export default class ProductCard {
     }
 
     changeQuantity() {
-        this.eventEmitter.emit(CHANGE_QUANTITY, this);
-
-        console.log('[EMIT] CHANGE_QUANTITY:', this.eventEmitter.events.get(CHANGE_QUANTITY));
+        if (this.inBasket) {
+            this.eventEmitter.emit(CHANGE_QUANTITY, this);
+            console.log('[EMIT] CHANGE_QUANTITY:', this.eventEmitter.events.get(CHANGE_QUANTITY));
+        }
     }
 
     onAddInBasket(fn) {
