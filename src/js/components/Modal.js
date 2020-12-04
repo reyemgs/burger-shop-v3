@@ -14,25 +14,29 @@ export default class Modal {
     }
 
     onUpdateIngridients(fn) {
-        this.eventEmitter.on(UPDATE_BASKET_INGRIDIENTS, fn, this);
+        this.eventEmitter.on(UPDATE_BASKET_INGRIDIENTS, fn);
     }
 
-    offUpdateBasketIngridients() {
-        this.eventEmitter.off(UPDATE_BASKET_INGRIDIENTS, this);
+    offUpdateBasketIngridients(fn) {
+        this.eventEmitter.off(UPDATE_BASKET_INGRIDIENTS, fn);
     }
 
     updateBasketIngridients() {
         if (this.currentProduct.inBasket) {
             this.eventEmitter.emit(UPDATE_BASKET_INGRIDIENTS, this.currentProduct);
+            console.log(
+                '[EMIT] UPDATE_BASKET_INGRIDIENTS:',
+                this.eventEmitter.events.get(UPDATE_BASKET_INGRIDIENTS)
+            );
         }
     }
 
     onRenderIngridients(fn) {
-        this.eventEmitter.on(RENDER_INGRIDIENTS_BY_CATEGORY, fn, this);
+        this.eventEmitter.on(RENDER_INGRIDIENTS_BY_CATEGORY, fn);
     }
 
-    offRenderIngridients() {
-        this.eventEmitter.off(RENDER_INGRIDIENTS_BY_CATEGORY, this);
+    offRenderIngridients(fn) {
+        this.eventEmitter.off(RENDER_INGRIDIENTS_BY_CATEGORY, fn);
     }
 
     open(product) {
@@ -48,6 +52,10 @@ export default class Modal {
         content.innerHTML = '';
 
         this.eventEmitter.emit(RENDER_INGRIDIENTS_BY_CATEGORY, menuItem.category);
+        console.log(
+            '[EMIT] RENDER_IGNRIDIENTS_BY_CATEGORY:',
+            this.eventEmitter.events.get(RENDER_INGRIDIENTS_BY_CATEGORY)
+        );
         this.activateIngridients(menuItem.category);
         this.calculatePrice();
         this.createPrice();
@@ -87,6 +95,10 @@ export default class Modal {
         content.innerHTML = '';
 
         this.eventEmitter.emit(RENDER_INGRIDIENTS_BY_CATEGORY, menuItem.category);
+        console.log(
+            '[EMIT] RENDER_IGNRIDIENTS_BY_CATEGORY:',
+            this.eventEmitter.events.get(RENDER_INGRIDIENTS_BY_CATEGORY)
+        );
         this.activateIngridients(menuItem.category);
     }
 
@@ -106,6 +118,10 @@ export default class Modal {
         content.innerHTML = '';
 
         this.eventEmitter.emit(RENDER_INGRIDIENTS_BY_CATEGORY, menuItem.category);
+        console.log(
+            '[EMIT] RENDER_IGNRIDIENTS_BY_CATEGORY',
+            this.eventEmitter.events.get(RENDER_INGRIDIENTS_BY_CATEGORY)
+        );
         this.activateIngridients(menuItem.category);
     }
 

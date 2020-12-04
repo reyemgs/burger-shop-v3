@@ -39,11 +39,12 @@ class App {
     }
 
     initSideBar() {
+        this.renderProductsByCategory = this.renderProductsByCategory.bind(this);
+
         this.menuList = new MenuList(this.response.categories);
         this.menuList.render();
-        this.menuList.onRenderProducts(category => {
-            this.renderProductsByCategory(category);
-        });
+
+        this.menuList.onRenderProducts(this.renderProductsByCategory);
         this.menuList.onPage('pizza');
 
         this.basket = new Basket();
@@ -51,20 +52,28 @@ class App {
     }
 
     initModal() {
+        this.renderIngridientsByCategory = this.renderIngridientsByCategory.bind(this);
+        this.basket.updateIngridients = this.basket.updateIngridients.bind(this.basket);
+
         this.modal = new Modal(this.response.modal, this.ingridients);
         this.modal.render();
-        this.modal.onRenderIngridients(category => {
-            this.renderIngridientsByCategory(category);
-        });
-        this.modal.onUpdateIngridients(product => this.basket.updateIngridients(product));
+
+        this.modal.onRenderIngridients(this.renderIngridientsByCategory);
+        this.modal.onUpdateIngridients(this.basket.updateIngridients);
     }
 
     initProductEvents() {
+        this.basket.addProductEvent = this.basket.addProductEvent.bind(this.basket);
+        this.modal.open = this.modal.open.bind(this.modal);
+        this.resetIngridients = this.resetIngridients.bind(this);
+
         for (const productCard of this.productCards) {
-            productCard.onAddInBasket(product => this.basket.addProductEvent(product));
+            productCard.onAddInBasket(this.basket.addProductEvent);
+
             if (productCard.type === 'multiple') {
-                productCard.onResetDefault(product => this.resetIngridients(product));
-                productCard.onOpenModal(product => this.modal.open(product));
+                productCard.onResetDefault(this.resetIngridients);
+                productCard.onOpenModal(this.modal.open);
+
                 productCard.setDefaultComponents();
                 productCard.resetDefault();
             }
@@ -72,10 +81,14 @@ class App {
     }
 
     initIngridientEvents() {
+        this.modal.addIngridient = this.modal.addIngridient.bind(this.modal);
+        this.modal.updatePrice = this.modal.updatePrice.bind(this.modal);
+        this.basket.updateTotalPrice = this.basket.updateTotalPrice.bind(this.basket);
+
         for (const ingridientCard of this.ingridientCards) {
-            ingridientCard.onAddIngridient(ingridient => this.modal.addIngridient(ingridient));
-            ingridientCard.onUpdateModalPrice(() => this.modal.updatePrice());
-            ingridientCard.onUpdateBasketTotalPrice(() => this.basket.updateTotalPrice());
+            ingridientCard.onAddIngridient(this.modal.addIngridient);
+            ingridientCard.onUpdateModalPrice(this.modal.updatePrice);
+            ingridientCard.onUpdateBasketTotalPrice(this.basket.updateTotalPrice);
         }
     }
 

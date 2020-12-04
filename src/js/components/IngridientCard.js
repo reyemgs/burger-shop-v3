@@ -19,27 +19,34 @@ export default class IngridientCard {
     }
 
     onAddIngridient(fn) {
-        this.eventEmitter.on(ADD_INGRIDIENT, fn, this);
+        this.eventEmitter.on(ADD_INGRIDIENT, fn);
     }
 
-    offAddIngridient() {
-        this.eventEmitter.off(ADD_INGRIDIENT, this);
+    offAddIngridient(fn) {
+        this.eventEmitter.off(ADD_INGRIDIENT, fn);
     }
 
     addIngridient() {
         this.eventEmitter.emit(ADD_INGRIDIENT, this);
+
+        console.log('[EMIT] ADD_INGRIDIENT:', this.eventEmitter.events.get(ADD_INGRIDIENT));
     }
 
     onUpdateBasketTotalPrice(fn) {
-        this.eventEmitter.on(UPDATE_BASKET_TOTAL_PRICE, fn, this);
+        this.eventEmitter.on(UPDATE_BASKET_TOTAL_PRICE, fn);
     }
 
-    offUpdateBasketTotalPrice() {
-        this.eventEmitter.off(UPDATE_BASKET_TOTAL_PRICE, this);
+    offUpdateBasketTotalPrice(fn) {
+        this.eventEmitter.off(UPDATE_BASKET_TOTAL_PRICE, fn);
     }
 
     updateBasketTotalPrice() {
         this.eventEmitter.emit(UPDATE_BASKET_TOTAL_PRICE);
+
+        console.log(
+            '[EMIT] UPDATE_BASKET_TOTAL_PRICE:',
+            this.eventEmitter.events.get(UPDATE_BASKET_TOTAL_PRICE)
+        );
     }
 
     onUpdateModalPrice(fn) {
@@ -52,6 +59,8 @@ export default class IngridientCard {
 
     updateModalPrice() {
         this.eventEmitter.emit(UPDATE_MODAL_PRICE);
+
+        console.log('[EMIT] UPDATE_MODAL_PRICE:', this.eventEmitter.events.get(UPDATE_MODAL_PRICE));
     }
 
     addActiveClass() {

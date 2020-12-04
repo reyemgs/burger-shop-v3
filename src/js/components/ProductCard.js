@@ -37,11 +37,13 @@ export default class ProductCard {
     }
 
     onChangeQuantity(fn) {
-        this.eventEmitter.on(CHANGE_QUANTITY, fn, this);
+        this.eventEmitter.on(CHANGE_QUANTITY, fn);
+        console.log('[ON] CHANGE_QUANTITY:', this.eventEmitter.events.get(CHANGE_QUANTITY));
     }
 
-    offChangeQuantity() {
-        this.eventEmitter.off(CHANGE_QUANTITY, this);
+    offChangeQuantity(fn) {
+        this.eventEmitter.off(CHANGE_QUANTITY, fn);
+        console.log('[OFF] CHANGE_QUANTITY:', this.eventEmitter.events.get(CHANGE_QUANTITY) || 'empty');
     }
 
     increaseQuantity() {
@@ -58,30 +60,44 @@ export default class ProductCard {
 
     changeQuantity() {
         this.eventEmitter.emit(CHANGE_QUANTITY, this);
+
+        console.log('[EMIT] CHANGE_QUANTITY:', this.eventEmitter.events.get(CHANGE_QUANTITY));
     }
 
     onAddInBasket(fn) {
-        this.eventEmitter.on(ADD_IN_BASKET, fn, this);
+        this.eventEmitter.on(ADD_IN_BASKET, fn);
+
+        console.log('[ON] ADD_IN_BASKET:', this.eventEmitter.events.get(ADD_IN_BASKET));
     }
 
-    offAddInBasket() {
-        this.eventEmitter.off(ADD_IN_BASKET, this);
+    offAddInBasket(fn) {
+        this.eventEmitter.off(ADD_IN_BASKET, fn);
+
+        console.log('[OFF] ADD_IN_BASKET:', this.eventEmitter.events.get(ADD_IN_BASKET) || 'empty');
     }
 
     addInBasket() {
         this.eventEmitter.emit(ADD_IN_BASKET, this);
+
+        console.log('[EMIT] ADD_IN_BASKET:', this.eventEmitter.events.get(ADD_IN_BASKET));
     }
 
     onOpenModal(fn) {
-        this.eventEmitter.on(OPEN_MODAL, fn, this);
+        this.eventEmitter.on(OPEN_MODAL, fn);
+
+        console.log('[ON] OPEN_MODAL:', this.eventEmitter.events.get(OPEN_MODAL));
     }
 
-    offOpenModal() {
-        this.eventEmitter.off(OPEN_MODAL, this);
+    offOpenModal(fn) {
+        this.eventEmitter.off(OPEN_MODAL, fn);
+
+        console.log('[OFF] OPEN_MODAL:', this.eventEmitter.events.get(OPEN_MODAL) || 'empty');
     }
 
     openModal() {
         this.eventEmitter.emit(OPEN_MODAL, this);
+
+        console.log('[EMIT] OPEN_MODAL:', this.eventEmitter.events.get(OPEN_MODAL));
     }
 
     addIngridient(ingridient) {
@@ -98,14 +114,29 @@ export default class ProductCard {
 
     onResetDefault(fn) {
         this.eventEmitter.on(RESET_DEFAULT_INGRIDIENTS, fn, this);
+
+        console.log(
+            '[ON] RESET_DEFAULT_INGRIDIENTS:',
+            this.eventEmitter.events.get(RESET_DEFAULT_INGRIDIENTS)
+        );
     }
 
     offResetDefault() {
         this.eventEmitter.off(RESET_DEFAULT_INGRIDIENTS, this);
+
+        console.log(
+            '[OFF] RESET_DEFAULT_INGRIDIENTS:',
+            this.eventEmitter.events.get(RESET_DEFAULT_INGRIDIENTS) || 'empty'
+        );
     }
 
     resetDefault() {
         this.eventEmitter.emit(RESET_DEFAULT_INGRIDIENTS, this);
+
+        console.log(
+            '[EMIT] RESET_DEFAULT_INGRIDIENTS:',
+            this.eventEmitter.events.get(RESET_DEFAULT_INGRIDIENTS)
+        );
     }
 
     updateQuantity() {

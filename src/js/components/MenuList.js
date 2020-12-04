@@ -20,17 +20,21 @@ export default class MenuList {
     }
 
     onRenderProducts(fn) {
-        this.eventEmitter.on(RENDER_PRODUCTS_BY_CATEGORY, fn, this);
+        this.eventEmitter.on(RENDER_PRODUCTS_BY_CATEGORY, fn);
     }
 
-    offRenderProducts() {
-        this.eventEmitter.off(RENDER_PRODUCTS_BY_CATEGORY, this);
+    offRenderProducts(fn) {
+        this.eventEmitter.off(RENDER_PRODUCTS_BY_CATEGORY, fn);
     }
 
     onPage(category) {
         const rightSideWrapper = document.querySelector('#rightside-wrapper');
         rightSideWrapper.innerHTML = '';
         this.eventEmitter.emit(RENDER_PRODUCTS_BY_CATEGORY, category);
+        console.log(
+            '[EMIT] RENDER_PRODUCTS_BY_CATEGORY:',
+            this.eventEmitter.events.get(RENDER_PRODUCTS_BY_CATEGORY)
+        );
         this.active(category);
     }
 

@@ -6,6 +6,8 @@ export default class Basket {
 
         this.productWrapper = null;
         this.quantityElem = null;
+
+        this.changeQuantityEvent = this.changeQuantityEvent.bind(this);
     }
 
     changeQuantityEvent(product) {
@@ -25,7 +27,7 @@ export default class Basket {
     addProduct(product) {
         const currentProduct = product;
 
-        currentProduct.onChangeQuantity(productCard => this.changeQuantityEvent(productCard));
+        currentProduct.onChangeQuantity(this.changeQuantityEvent);
 
         const addedProduct = this.addedProducts.find(item => item === product);
         if (!addedProduct) {
@@ -46,7 +48,7 @@ export default class Basket {
         currentProduct.changeButton();
         currentProduct.updateQuantity();
 
-        currentProduct.offChangeQuantity();
+        currentProduct.offChangeQuantity(this.changeQuantityEvent);
 
         if (currentProduct.type === 'multiple') {
             currentProduct.resetDefault();
