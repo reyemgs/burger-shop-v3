@@ -120,7 +120,7 @@ export default class ProductCard {
         this.quantityElem.innerHTML = this.quantity;
     }
 
-    changeButton() {м
+    changeButton() {
         if (this.inBasket) {
             if (this.type === 'multiple') {
                 this.inBasketButton.innerHTML = 'ИЗМЕНИТЬ';
